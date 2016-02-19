@@ -45,7 +45,7 @@ public class Network implements ITableListener
             @Override
             public void run()
             {
-                table = NetworkTable.getTable(DASHBOARD_NAME);
+                table = (NetworkTable) NetworkTable.getTable(DASHBOARD_NAME).getSubTable("Robot Diagram");
                 table.addTableListener(Network.this);
                 table.addSubTableListener(Network.this);
 

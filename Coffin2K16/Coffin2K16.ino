@@ -20,9 +20,17 @@
 #define PIN_ELEVATOR_TOP_HEIGHT
 #define PIN_MOTOR_RUNNING
 
+// include the library code:
+#include <LiquidCrystal.h>
+
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd1(12, 11, 5, 4, 3, 2);
+
 
 void setup() 
 {
+    lcd.begin(16, 2);
+    
     Serial.begin(9600);
     Serial.println("Waiting for Commands");
 }
