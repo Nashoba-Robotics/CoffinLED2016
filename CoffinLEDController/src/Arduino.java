@@ -26,13 +26,15 @@ public class Arduino implements SerialPortEventListener
     SerialPort serialPort;
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
+            "COM20",
             "/dev/tty.usbserial-A9007UX1", // Mac OS X
             "/dev/cu.usbmodem1421",
             "/dev/ttyACM0", // Raspberry Pi
             "/dev/ttyUSB0", // Linux
             "COM3",
             "COM4", // Windows
-            "COM5"
+            "COM5",
+            "COM6"
     };
 
     private Arduino(){}
@@ -149,10 +151,12 @@ public class Arduino implements SerialPortEventListener
     {
         try
         {
-            input.close();
-            output.close();
+            if(input != null)
+                input.close();
+            if(output != null)
+                output.close();
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }

@@ -24,7 +24,7 @@ public class Network implements ITableListener
     private Network()
     {
         NetworkTable.setClientMode();
-        NetworkTable.setIPAddress("10.17.68.2");
+        NetworkTable.setIPAddress("localhost");
     }
 
     public interface ConnectionListener
