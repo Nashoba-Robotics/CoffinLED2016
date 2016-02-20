@@ -26,6 +26,7 @@
 
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd1(12, 11, 5, 4, 3, 2);
+LiquidCrystal lcd2(12, 11, 5, 4, 3, 2); //TODO: determine pin numbers for lcd2
 
 #define LED_STRIP_PIN 50
 #define LED_COUNT 45
@@ -98,26 +99,26 @@ void loop()
     //2 indicates hood angle data
     else if (inputString.charAt(0) == '2')
     {
-      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
-      writeHoodAngleData(angle_s.toFloat());
+      String angle = inputString.substring(0,inputString.indexOf("\n"));
+      writeHoodAngleData(angle);
     }
     //3 indicates shot distance at angle data
-    else if (inputString.charAt(0) == '2')
+    else if (inputString.charAt(0) == '3')
     {
-      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
-      writeShotDistanceData(angle_s.toFloat());
+      String shot = inputString.substring(0,inputString.indexOf("\n"));
+      writeShotDistanceData(shot);
     }
     //4 indicates shooter speed data
-    else if (inputString.charAt(0) == '2')
+    else if (inputString.charAt(0) == '4')
     {
-      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
-      writeActualShooterData(angle_s.toFloat());
+      String shooter_speed = inputString.substring(0,inputString.indexOf("\n"));
+      writeActualShooterData(shooter_speed);
     }
     //5 indicates goal shooter speed data
-    else if (inputString.charAt(0) == '2')
+    else if (inputString.charAt(0) == '5')
     {
-      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
-      writeGoalShooterData(angle_s.toFloat());
+      String goal_shooter_speed = inputString.substring(0,inputString.indexOf("\n"));
+      writeGoalShooterData(goal_shooter_speed);
     }
   }
 }
@@ -127,20 +128,25 @@ int msgState = 0;
 unsigned long previousMillis = 0;        // will store last time LED was updated
 const long interval = 250;           // interval at which to blink (milliseconds)
 
-void writeHoodAngleData(float angle) {
-  //TODO
+void writeHoodAngleData(String angle) {
+  lcd1.setCursor(0, 0);
+  lcd1.println(angle);
 }
 
-void writeShotDistanceData(float distance) {
-  //TODO
+void writeShotDistanceData(String distance) {
+  lcd1.setCursor(0, 1);
+  lcd1.println(distance);
 }
 
-void writeActualShooterData(float shooter_speed) {
-  //TODO
+void writeActualShooterData(String shooter_speed) {
+  lcd2.setCursor(0, 0);
+  lcd2.println(shooter_speed);
 }
 
-void writeGoalShooterData(float shooter_speed) {
-  //TODO
+void writeGoalShooterData(String goal_shooter_speed) {
+  lcd2.setCursor(0, 1);
+  lcd2.println(goal_shooter_speed);
+
 }
 
 void ledBlink()

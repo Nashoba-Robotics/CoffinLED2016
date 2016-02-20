@@ -145,7 +145,7 @@ public class Frame extends JFrame implements WindowListener
                 }
 
                 //Send the individual LED data to the arduino
-                //The '0' prefix tells the arduino what kind of data it's getting
+                //The prefix tells the arduino what kind of data it's getting
                 Arduino.getInstance().sendMessage("0" + build.toString());
 
                 Boolean autoAligning = Network.getInstance().getBoolean("Auto Align Happening");
@@ -160,7 +160,26 @@ public class Frame extends JFrame implements WindowListener
                 else
                     message += "0";
                 Arduino.getInstance().sendMessage(message);
-
+                
+                double angle = Network.getInstance().getNumber("Hood Angle");
+                message = "2";
+                message += angle;
+                Arduino.getInstance().sendMessage(message);
+                
+                double distance = Network.getInstance().getNumber("Shot distance at angle");
+                message = "3";
+                message += distance;
+                Arduino.getInstance().sendMessage(message);
+                
+                double speed = Network.getInstance().getNumber("Shooter Speed");
+                message = "4";
+                message += speed;
+                Arduino.getInstance().sendMessage(message);
+                
+                double goal_speed = Network.getInstance().getNumber("Shooter Target Speed");
+                message = "5";
+                message += goal_speed;
+                Arduino.getInstance().sendMessage(message);
             }
 	});
 
