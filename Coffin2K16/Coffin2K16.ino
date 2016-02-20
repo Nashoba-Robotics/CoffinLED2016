@@ -95,6 +95,30 @@ void loop()
       else if(autoAligning)
         ledSolid();
     }
+    //2 indicates hood angle data
+    else if (inputString.charAt(0) == '2')
+    {
+      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
+      writeHoodAngleData(angle_s.toFloat());
+    }
+    //3 indicates shot distance at angle data
+    else if (inputString.charAt(0) == '2')
+    {
+      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
+      writeShotDistanceData(angle_s.toFloat());
+    }
+    //4 indicates shooter speed data
+    else if (inputString.charAt(0) == '2')
+    {
+      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
+      writeActualShooterData(angle_s.toFloat());
+    }
+    //5 indicates goal shooter speed data
+    else if (inputString.charAt(0) == '2')
+    {
+      String angle_s = inputString.substring(0,inputString.indexOf("\n"));
+      writeGoalShooterData(angle_s.toFloat());
+    }
   }
 }
 
@@ -102,6 +126,22 @@ bool ledState = true;
 int msgState = 0;
 unsigned long previousMillis = 0;        // will store last time LED was updated
 const long interval = 250;           // interval at which to blink (milliseconds)
+
+void writeHoodAngleData(float angle) {
+  //TODO
+}
+
+void writeShotDistanceData(float distance) {
+  //TODO
+}
+
+void writeActualShooterData(float shooter_speed) {
+  //TODO
+}
+
+void writeGoalShooterData(float shooter_speed) {
+  //TODO
+}
 
 void ledBlink()
 {
