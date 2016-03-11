@@ -24,7 +24,7 @@ public class Network implements ITableListener
     private Network()
     {
         NetworkTable.setClientMode();
-        NetworkTable.setIPAddress("localhost");
+        NetworkTable.setIPAddress("roboRIO-1768-FRC.local");
     }
 
     public interface ConnectionListener
@@ -139,7 +139,9 @@ public class Network implements ITableListener
         }
         catch (TableKeyNotDefinedException e)
         {
-            return null;
+            System.err.println("Couldn't find table key " + key);
+            return 0.0;
+
         }
     }
 

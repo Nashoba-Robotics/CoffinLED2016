@@ -91,6 +91,7 @@ public class Frame extends JFrame implements WindowListener
 
     private void setupNetworkListener()
     {
+
         Network.getInstance().setConnectionListener(new Network.ConnectionListener()
         {
             @Override
@@ -113,6 +114,7 @@ public class Frame extends JFrame implements WindowListener
             @Override
             public void onMessageReceived(String key, Object value)
             {
+
                 ArrayList<Boolean> values = new ArrayList<Boolean>();
                 values.add(Network.getInstance().getBoolean("Hood Bottom"));
                 values.add(Network.getInstance().getBoolean("Hood Top"));
@@ -148,6 +150,8 @@ public class Frame extends JFrame implements WindowListener
                 //The prefix tells the arduino what kind of data it's getting
                 Arduino.getInstance().sendMessage("0" + build.toString());
 
+                Network.getInstance();
+
                 Boolean autoAligning = Network.getInstance().getBoolean("Auto Align Happening");
                 Boolean allSystemsGo = Network.getInstance().getBoolean("All Systems Go");
                 String message = "1";
@@ -160,15 +164,20 @@ public class Frame extends JFrame implements WindowListener
                 else
                     message += "0";
                 Arduino.getInstance().sendMessage(message);
-                
+
+                Network.getInstance().getNumber("Shot distance at angle");
+
+                double distance =
+                        Network
+                                .getInstance()
+                        .getNumber("Shot distance at angle");
+                message = "3";
+                message += distance;
+                Arduino.getInstance().sendMessage(message);
+
                 double angle = Network.getInstance().getNumber("Hood Angle");
                 message = "2";
                 message += angle;
-                Arduino.getInstance().sendMessage(message);
-                
-                double distance = Network.getInstance().getNumber("Shot distance at angle");
-                message = "3";
-                message += distance;
                 Arduino.getInstance().sendMessage(message);
                 
                 double speed = Network.getInstance().getNumber("Shooter Speed");

@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="NetworkTables">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/NetworkTables.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/CoffinLEDController/lib/NetworkTables.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
