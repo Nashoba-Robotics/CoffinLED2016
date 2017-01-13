@@ -200,6 +200,27 @@ public class Arduino implements SerialPortEventListener
             attemptedMessageSend = message;
         }
     }
+    
+    //2017
+    public void sendLED(char startPos, char arr[][3]) {
+    	String message = "s";
+    	message += arr.length;
+    	message += startPos;
+    	for(int i = 0; i < arr.length; i++) {
+    		message += arr[i][0];
+    		message += arr[i][1];
+    		message += arr[i][2];
+    	}
+    	message += 'e';
+    	System.out.println("sending message: ", message);
+    	
+    	sendMessage(message);
+    }
+    public void sendLCD(char x, char y, String message)) {
+    	String LCDMessage = "LCD" + x + y + (char)message.length() + message;
+    	
+    	sendMessage(LCDMessage);
+    }
 
     public interface ConnectionStatusChangeListener
     {
