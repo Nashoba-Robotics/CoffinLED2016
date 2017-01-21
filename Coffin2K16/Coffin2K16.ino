@@ -27,6 +27,7 @@
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd1(12, 11, 5, 4, 3, 2);
 LiquidCrystal lcd2(12, 11, 5, 4, 3, 2); //TODO: determine pin numbers for lcd2
+LiquidCrystal actualLcd(48, 49, 50, 51, 52, 53);
 
 #define LED_STRIP_PIN 50
 #define LED_COUNT 45
@@ -45,10 +46,12 @@ PIN_MOTOR_RUNNING};
 void setup() 
 {
     lcd1.begin(16, 2);
+    actualLcd.begin(16, 2);
     
     Serial.begin(9600);
     Serial.println("Waiting for Commands");
     lcd1.print("Hello World");
+    actualLcd.print("Hello World!");
 
     for(int i = 0; i < sizeof(myPins) / sizeof(int); i++)
     {

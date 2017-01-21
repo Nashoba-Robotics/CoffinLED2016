@@ -2,7 +2,7 @@
 #include <Adafruit_NeoPixel.h>
 //#include "WS2812_Definitions.h"
 
-#define PIN 8
+#define PIN 46
 #define LED_COUNT 45
 #define START_LED 's'
 #define END_LED 'e'
@@ -11,12 +11,12 @@
 
 #define LCD_X 16
 #define LCD_Y 2
-#define LCD_RS 2
-#define LCD_E 3
-#define LCD_DB4 4
-#define LCD_DB5 5
-#define LCD_DB6 6
-#define LCD_DB7 7
+#define LCD_RS 53
+#define LCD_E 52
+#define LCD_DB4 51
+#define LCD_DB5 50
+#define LCD_DB6 49
+#define LCD_DB7 48
 
 //START, #LEDs, start pos(LED # starting from 0 -> LED_COUNT-1, ... END
 //START_LED means begin parsing for LED strip display
@@ -33,6 +33,7 @@ char message[TOT_LEN];
 
 void setup() {  
   Serial.begin(9600);
+  Serial.println("Hello World!");
   strip.begin();
   lcd.begin(LCD_X, LCD_Y);
   
@@ -46,14 +47,27 @@ void setup() {
   strip.show();
 }
 
-int n = 0;
+int n = 0, i = 0;
 void loop() {
-  parseInfo();
+  //lcd.print("Hello World!");
+  //i = testLEDs(i);
+  //parseInfo();
+
+  //countDown(15);
+    countDown2(15);
+  
+  //for(int i = 0; i < LED_COUNT; i++) {
+    //states[i][0] = 0xFF;
+  //}
+  //drawStates();
+
+  
 }
 
 
 
 //////////////////fubctions
+
 
 
 
@@ -66,9 +80,50 @@ void clearLEDs() {
   }
 }
 
-void setLED(int n, char r, char g, char b) {
+void setLED(int n, char r, char g, char b) {//ex:(5, 0xFF, 0xE1, 0xF3)
   strip.setPixelColor(n, r, g, b);
   strip.show();//if lag, put this after a large number of setPixelColor() 's
+}
+
+int testLEDs(int i) {
+  //clearLEDs();
+  for(int j = 0; j < LED_COUNT; j++) {
+    setLED(j, (i+j)%0xFF, (i+0xAA+j)%0xFF, (i+0x55+j)%0xFF);
+  }
+  i++;
+  i = i%0xFF;
+  return i;
+}
+
+void countDown(int seconds) {
+  for(int j = seconds; j>0; j--) {
+    delay(1000);
+    if(j<seconds && j>(seconds/3)*2) {
+      for(int i=0; i<LED_COUNT; i++) {
+        setLED(i, 0x00, 0xFF, 0x00);
+      }
+    }
+     if(j<(seconds/3)*2 && j> seconds/3) {
+       for(int i=0; i<LED_COUNT; i++) {
+         setLED(i, 0x00, 0x00, 0xFF);
+       }
+     }
+     if(j<seconds/3) {
+       for(int i=0; i<LED_COUNT; i++) {
+         setLED(i, 0xFF, 0x00, 0x00);
+       }
+     }
+  }
+}
+
+void countDown2(int seconds) {
+  for(int LED = LED_COUNT; LED >= 0; LED--) {
+    delay((seconds/LED_COUNT)*1000);
+    states[LED][0] = 0xFF;
+    states[LED][1] = 0xFF;
+    states[LED][2] = 0xFF;
+    drawStates();
+  }
 }
 
 void drawStates() {
