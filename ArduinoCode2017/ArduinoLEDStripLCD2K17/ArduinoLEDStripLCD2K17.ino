@@ -48,13 +48,16 @@ void setup() {
 }
 
 int n = 0, i = 0;
+double p = 0;
 void loop() {
   //lcd.print("Hello World!");
   //i = testLEDs(i);
   //parseInfo();
 
   //countDown(15);
-    countDown2(15);
+    //countDown2(5.0);
+    //gameTimer();
+  p = pong(p);
   
   //for(int i = 0; i < LED_COUNT; i++) {
     //states[i][0] = 0xFF;
@@ -82,6 +85,9 @@ void clearLEDs() {
 
 void setLED(int n, char r, char g, char b) {//ex:(5, 0xFF, 0xE1, 0xF3)
   strip.setPixelColor(n, r, g, b);
+  states[n][0] = r;
+  states[n][1] = g;
+  states[n][2] = b;
   strip.show();//if lag, put this after a large number of setPixelColor() 's
 }
 
@@ -93,6 +99,10 @@ int testLEDs(int i) {
   i++;
   i = i%0xFF;
   return i;
+}
+
+double pong(double ) {
+  
 }
 
 void countDown(int seconds) {
@@ -116,13 +126,48 @@ void countDown(int seconds) {
   }
 }
 
-void countDown2(int seconds) {
+void countDown2(double seconds) {
+  for(int LED = LED_COUNT; LED >= 0; LED--) {
+    //delay((seconds/LED_COUNT)*1000);
+    states[LED][0] = 0x00;
+    states[LED][1] = 0xFF;
+    states[LED][2] = 0x00;
+  }
+  drawStates();
   for(int LED = LED_COUNT; LED >= 0; LED--) {
     delay((seconds/LED_COUNT)*1000);
     states[LED][0] = 0xFF;
-    states[LED][1] = 0xFF;
-    states[LED][2] = 0xFF;
+    states[LED][1] = 0x00;
+    states[LED][2] = 0x00;
     drawStates();
+  }
+}
+
+void gameTimer() {
+  double seconds = 2.5*60;
+  double t1 = 12/seconds, t2 = (1.9*60)/seconds;
+  for(int LED = LED_COUNT; LED >= 0; LED--) {
+    //delay((seconds/LED_COUNT)*1000);
+    if(LED < t1*LED_COUNT) {
+      states[LED][2] = 0xFF;
+      states[LED][0] = 0x00;
+      states[LED][1] = 0x00;
+    }
+    if(LED >= t1*LED_COUNT && LED < t2*LED_COUNT) {
+      states[LED][1] = 0xFF;
+      states[LED][0] = 0x00;
+      states[LED][2] = 0x00;
+    }
+    if(LED >= t2*LED_COUNT) {
+      states[LED][0] = 0xFF;
+      states[LED][1] = 0xFF;
+      states[LED][2] = 0x00;
+    }
+  }
+  drawStates();
+  for(int LED = 0; LED < LED_COUNT; LED++) {
+    delay((seconds/LED_COUNT)*1000);
+    setLED(LED, 0xFF, 0x00, 0x00);
   }
 }
 
